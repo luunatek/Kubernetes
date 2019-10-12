@@ -9,7 +9,7 @@ Label nodes:
   $ kubectl label nodes <node-name> <label-key>=<label-value>
   $ kubectl label nodes node01 size=large
  
-pod.yaml
+>>>pod-node-selector-example.yaml<<<
 apiVersion: v1
 kind: Pod
 metadata:
@@ -43,7 +43,7 @@ There are currently two types of node affinity:
   - requiredDuringSchedulingIgnoredDuringExecution
   - preferredDuringSchedulingIgnoredDuringExecution
   
-pod-affinity-example.yaml
+>>>pod-affinity-example.yaml<<<
 apiVersion: v1
 kind: Pod
 metadata:
