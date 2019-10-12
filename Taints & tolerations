@@ -32,3 +32,8 @@ tolarations:
   effect: "NoSchedule"
   
   $ kubectl taint node1 app=web:NoSchedule
+
+When kubernetes cluster is first set up, it will automatically taint it's set on master node to prevent any node being 
+scheduled on this node.
+  $ kubectl describe node master | grep Taint
+    Taints:    node-role.kubernetes.io/master:NoSchedule
