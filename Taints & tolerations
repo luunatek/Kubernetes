@@ -36,4 +36,7 @@ tolarations:
 When kubernetes cluster is first set up, it will automatically taint it's set on master node to prevent any node being 
 scheduled on this node.
   $ kubectl describe node master | grep Taint
-    Taints:    node-role.kubernetes.io/master:NoSchedule
+    Taints:             node-role.kubernetes.io/master:NoSchedule
+Remove the taint on master:
+  $ kubectl taint nodes master node-role.kubernetes.io/master:NoSchedule-
+    node/master untainted
