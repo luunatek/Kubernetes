@@ -40,8 +40,11 @@ Node affinity - is conceptually similar to nodeSelector – it allows you to con
 scheduled on, based on labels on the node.
 
 There are currently two types of node affinity:
+Available:
   - requiredDuringSchedulingIgnoredDuringExecution
   - preferredDuringSchedulingIgnoredDuringExecution
+Planned:
+  - requiredDuringSchedulingRequiredDuringExecution
   
 >>>pod-affinity-example.yaml<<<
 apiVersion: v1
@@ -83,5 +86,10 @@ _________________
 _________________
 - key: size
   operator: NotIn
+  values:
+  - Small
+_________________
+- key: size
+  operator: Exists
   values:
   - Small
