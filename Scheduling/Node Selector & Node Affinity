@@ -73,3 +73,15 @@ spec:
   containers:
   - name: with-pod-affinity
     image: k8s.gcr.io/pause:2.0
+
+_________________
+- key: size
+  operator: In
+  values:
+  - Large
+  - Medium
+_________________
+- key: size
+  operator: NotIn
+  values:
+  - Small
