@@ -23,7 +23,7 @@ spec:
     imagePullPolicy: IfNotPresent
   nodeSelector:
     disktype: ssd
-    
+>>> Note: On NodeSelectot you can not provide advanced expression: OR/NOT (Medium OR Large; Not small)
 >>> Node Selector vs Node Affinity:
 
 nodeSelector - provides a very simple way to constrain pods to nodes with particular labels. 
@@ -34,3 +34,42 @@ The key enhancements are:
     the pod will still be scheduled
   - you can constrain against labels on other pods running on the node (or other topological domain), rather than against labels
     on the node itself, which allows rules about which pods can and cannot be co-located
+
+Node Affinity:
+Node affinity - is conceptually similar to nodeSelector – it allows you to constrain which nodes your pod is eligible to be 
+scheduled on, based on labels on the node.
+
+There are currently two types of node affinity:
+  - requiredDuringSchedulingIgnoredDuringExecution
+  - preferredDuringSchedulingIgnoredDuringExecution
+  
+pod-affinity-example.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: with-pod-affinity
+spec:
+  affinity:
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: security
+            operator: In
+            values:
+            - S1
+        topologyKey: failure-domain.beta.kubernetes.io/zone
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: security
+              operator: In
+              values:
+              - S2
+          topologyKey: failure-domain.beta.kubernetes.io/zone
+  containers:
+  - name: with-pod-affinity
+    image: k8s.gcr.io/pause:2.0
