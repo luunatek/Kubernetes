@@ -1,0 +1,36 @@
+Node Selector:
+nodeSelector - is the simplest recommended form of node selection constraint. nodeSelector is a field of PodSpec. 
+You can constrain a Pod to only be able to run on particular Node(s) , or to prefer to run on particular nodes.
+There are some circumstances where you may want more control on a node where a pod lands, e.g. to ensure that a pod ends up 
+on a machine with an SSD attached to it, or to co-locate pods from two different services that communicate 
+a lot into the same availability zone.
+
+Label nodes:
+  $ kubectl label nodes <node-name> <label-key>=<label-value>
+  $ kubectl label nodes node01 size=large
+ 
+pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    env: test
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    imagePullPolicy: IfNotPresent
+  nodeSelector:
+    disktype: ssd
+    
+>>> Node Selector vs Node Affinity:
+
+nodeSelector - provides a very simple way to constrain pods to nodes with particular labels. 
+The affinity/anti-affinity feature, greatly expands the types of constraints you can express. 
+The key enhancements are:
+  - the language is more expressive (not just “AND of exact match”)
+  - you can indicate that the rule is “soft”/“preference” rather than a hard requirement, so if the scheduler can’t satisfy it, 
+    the pod will still be scheduled
+  - you can constrain against labels on other pods running on the node (or other topological domain), rather than against labels
+    on the node itself, which allows rules about which pods can and cannot be co-located
