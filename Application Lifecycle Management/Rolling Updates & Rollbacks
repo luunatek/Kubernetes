@@ -1,0 +1,15 @@
+Rolling updates allow the following actions:
+   - Promote an application from one environment to another (via container image updates)
+   - Rollback to previous versions
+   - Continuous Integration and Continuous Delivery of applications with zero downtime
+   
+Update:
+  $ kc apply -f deployment-definition.yaml
+  $ kc set image deployment/myapp-deployment nginx=nginx:1.9.1
+
+Status:
+  $ kc rollout status deployment/myapp-deployment
+  $ kc rollout history deployment/myapp-deployment
+
+Rollback:
+  $ kc rollout undo deployment/myapp-deployment
