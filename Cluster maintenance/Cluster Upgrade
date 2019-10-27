@@ -1,0 +1,4 @@
+kubeadm upgrade plan
+
+Run the command apt install kubeadm=1.12.0-00 and then kubeadm upgrade apply v1.12.0 and then 
+apt install kubelet=1.12.0-00 to upgrade the kubelet on the master node
