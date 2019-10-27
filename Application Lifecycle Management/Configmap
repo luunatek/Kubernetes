@@ -1,0 +1,4 @@
+ConfigMaps - are used to pass configuration data in form of key, value pairs in kubernetes. 
+
+Imperative: kubectl create configmap (without using configmap definition file.)
+Declarative: kubectl create -f 
