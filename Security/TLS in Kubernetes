@@ -1,0 +1,30 @@
+Certificate Authority (CA)
+Generate Keys (ca.key) - openssl genra -out ca.key 2048
+Certificate Signing Request(ca.csr) - openssl req -new -key ca.key -subj "/CN=KUBERNETES-CA" -out ca.csr
+Sign Certificate(ca.crt) - openssl x509 -req in ca.csr -signkey ca.key -out ca.crt
+
+Generate client cert 
+Admin user:
+openssl genra -out admin.key 2048
+openssl req -new -key admin.key -subj "/CN=kube-admin" -out admin.csr
+openssl x509 -req -in admin.csr -CA ca.crt -CAkey ca.key -out admin.crt
+
+Client Certs for clients:
+- admin;
+- scheduler;
+- controller-manager
+- kube-proxy 
+
+Server Certificates for Servers:
+- etcdserver
+- apiserver
+
+- kubectl nodes(server cert)
+- kubectl nodes(client cert)
+
+View certificstion details:
+openssl x509 -in /etc/kubernetes/pki/apiserver.crt -text -noout
+journalctl -u etcd.service -l
+kubectl logs etcd-master (if apiserver/etcd servers are down 'kubectl won't finction)
+docker ps -a  (list all containers)
+docker logs <container id>
