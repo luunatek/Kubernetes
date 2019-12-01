@@ -13,9 +13,14 @@ kind: DaemonSetmetadata:
   name: elasticsearch
   namespace: kube-system
 spec:
-  selector:    matchLabels:
+  selector:    
+    matchLabels:
       name: elasticsearch
-  template:    metadata:      labels:
-        name: elasticsearch    spec:
-      containers:      - name: elasticsearch
+  template:    
+    metadata:      
+      labels:
+        name: elasticsearch    
+    spec:
+      containers:      
+      - name: elasticsearch
         image: k8s.gcr.io/fluentd-elasticsearch:1.20
