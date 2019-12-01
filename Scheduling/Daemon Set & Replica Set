@@ -6,3 +6,16 @@ Some typical uses of a DaemonSet are:
   - running a logs collection daemon on every node, such as fluentd or logstash.
   - running a node monitoring daemon on every node, such as Prometheus Node Exporter, Sysdig Agent, collectd, Dynatrace 
   OneAgent, AppDynamics Agent, Datadog agent, New Relic agent, Ganglia gmond or Instana Agent.
+
+>>> elasticsearch.yaml <<<
+apiVersion: apps/v1
+kind: DaemonSetmetadata:
+  name: elasticsearch
+  namespace: kube-system
+spec:
+  selector:    matchLabels:
+      name: elasticsearch
+  template:    metadata:      labels:
+        name: elasticsearch    spec:
+      containers:      - name: elasticsearch
+        image: k8s.gcr.io/fluentd-elasticsearch:1.20
