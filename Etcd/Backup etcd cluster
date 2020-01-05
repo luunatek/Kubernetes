@@ -1,0 +1,34 @@
+master $ cat /etc/kubernetes/manifests/etcd.yaml
+
+master $ ls -l /etc/kubernetes/pki/etcd/
+total 32
+-rw-r--r-- 1 root root 1017 Jan  5 22:44 ca.crt
+-rw------- 1 root root 1679 Jan  5 22:44 ca.key
+-rw-r--r-- 1 root root 1094 Jan  5 22:44 healthcheck-client.crt
+-rw------- 1 root root 1675 Jan  5 22:44 healthcheck-client.key
+-rw-r--r-- 1 root root 1127 Jan  5 22:44 peer.crt
+-rw------- 1 root root 1675 Jan  5 22:44 peer.key
+-rw-r--r-- 1 root root 1127 Jan  5 22:44 server.crt
+-rw------- 1 root root 1675 Jan  5 22:44 server.key
+
+master $ ETCDCTL_API=3 etcdctl --endpoints=https://172.17.0.7:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/
+kubernetes/pki/etcd/healthcheck-client.crt --key=/etc/kubernetes/pki/etcd/healthcheck-client.key member list
+ed42dd1ddfd62d53, started, master, https://172.17.0.7:2380, https://172.17.0.7:2379
+
+master $ ETCDCTL_API=3 etcdctl --endpoints=https://172.17.0.7:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/
+kubernetes/pki/etcd/healthcheck-client.crt --key=/etc/kubernetes/pki/etcd/healthcheck-client.key snapshot save /tmp/etcd
+-backup.db
+Snapshot saved at /tmp/etcd-backup.db
+
+master $ ETCDCTL_API=3 etcdctl --endpoints=https://172.17.0.7:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/
+kubernetes/pki/etcd/healthcheck-client.crt --key=/etc/kubernetes/pki/etcd/healthcheck-client.key snapshot status /tmp/et
+cd-backup.db
+dac908ae, 2390, 1075, 1.7 MB
+
+master $ ETCDCTL_API=3 etcdctl --endpoints=https://172.17.0.7:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/
+kubernetes/pki/etcd/healthcheck-client.crt --key=/etc/kubernetes/pki/etcd/healthcheck-client.key snapshot status /tmp/etcd-backup.db -w table
++----------+----------+------------+------------+
+|   HASH   | REVISION | TOTAL KEYS | TOTAL SIZE |
++----------+----------+------------+------------+
+| dac908ae |     2390 |       1075 |     1.7 MB |
++----------+----------+------------+------------+
