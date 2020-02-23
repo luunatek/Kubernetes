@@ -1,0 +1,31 @@
+Create a Certificate Signing Request object to send to the Kubernetes API
+
+Generate a CSR yaml blob and send it to the apiserver by running the following command:
+
+cat <<EOF | kubectl apply -f -
+apiVersion: certificates.k8s.io/v1beta1
+kind: CertificateSigningRequest
+metadata:
+  name: my-svc.my-namespace
+spec:
+  request: $(cat server.csr | base64 | tr -d '\n')
+  usages:
+  - digital signature
+  - key encipherment
+  - server auth
+EOF
+
+Approve or deny CSR:
+A Kubernetes administrator (with appropriate permissions) can manually approve 
+(or deny) Certificate Signing Requests by using this commands.
+>>> kubectl certificate approve and kubectl certificate deny 
+
+Create Role:
+>>> kubectl create role developer --resource=pods --verb=create,list,get,update,delete --namespace=development
+>>> kubectl describe role developer -n development
+
+>>> kubectl create rolebinding developer-role-binding --role=developer --user=john -n development
+>>> kubectl -n development describe rolebinding developer-role-binding
+
+VERIFY:
+>>> kubectl auth can-i delete pods --as-john -n development
