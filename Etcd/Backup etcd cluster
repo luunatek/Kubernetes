@@ -15,7 +15,7 @@ master $ ETCDCTL_API=3 etcdctl --endpoints=https://172.17.0.7:2379 --cacert=/etc
 kubernetes/pki/etcd/healthcheck-client.crt --key=/etc/kubernetes/pki/etcd/healthcheck-client.key member list
 ed42dd1ddfd62d53, started, master, https://172.17.0.7:2380, https://172.17.0.7:2379
 
-master $ ETCDCTL_API=3 etcdctl --endpoints=https://172.17.0.7:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/
+      master $ ETCDCTL_API=3 etcdctl --endpoints=https://172.17.0.7:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/
 kubernetes/pki/etcd/healthcheck-client.crt --key=/etc/kubernetes/pki/etcd/healthcheck-client.key snapshot save /tmp/etcd
 -backup.db
 Snapshot saved at /tmp/etcd-backup.db
